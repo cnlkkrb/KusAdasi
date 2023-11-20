@@ -1,118 +1,128 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeIcon, HomeIconFilled } from './src/icon/home-icon';
+import { TransactionsIcon, TransactionsIconFilled } from './src/icon/transactions-icon';
+import { NotificationIcon, NotificationIconFilled } from './src/icon/notification-icon';
+import { AccountIcon, AccountIconFilled } from './src/icon/account-icon';
+import HomeScreen from './src/screens/HomeScreen';
+import TransactionsScreen from './src/screens/TransactionsScreen';
+import NotificationScreen from './src/screens/NotificationScreen';
+import AccountScreen from './src/screens/AccountScreen';
+import QRTab from './src/components/QRTab';
+import QRScreen from './src/screens/QRScreen';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const Tab = createBottomTabNavigator();
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const BottomTab = () => {
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+       <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 12, fontWeight: '500', top: -15 },
+          tabBarActiveTintColor: '#3e414c',
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            height: 80,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4.84,
+            elevation: 5,
+          }
+        }}>
+        <Tab.Screen
+          options={{
+            title: 'Anasayfa',
+            headerShown: false,
+            tabBarIcon: ({ focused }) => {
+              if (focused)
+                return (
+                  <>
+                    <HomeIconFilled />
+                  </>
+                );
+              return <HomeIcon />;
+            },
+          }}
+          name="Anasayfa"
+          component={HomeScreen}
+        />
+        <Tab.Screen
+          options={{
+            title: 'İşlemler',
+            headerShown: false,
+            tabBarIcon: ({ focused }) => {
+              if (focused)
+                return (
+                  <>
+                    <TransactionsIconFilled />
+                  </>
+                );
+              return <TransactionsIcon />;
+            },
+          }}
+          name="İşlemler"
+          component={TransactionsScreen}
+        />
+        <Tab.Screen
+          options={{
+            title: () => null,
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <QRTab />
+            )
+          }}
+          name="PlusScreen"
+          component={QRScreen}
+        />
+        <Tab.Screen
+          options={{
+            title: 'Bildirimler',
+            headerShown: false,
+            tabBarIcon: ({ focused }) => {
+              if (focused)
+                return (
+                  <>
+                    <NotificationIconFilled />
+                  </>
+                );
+              return <NotificationIcon />;
+            },
+          }}
+          name="Bildirimler"
+          component={NotificationScreen}
+        />
+        <Tab.Screen
+          options={{
+            title: 'Hesap',
+            headerShown: false,
+            tabBarIcon: ({ focused }) => {
+              if (focused)
+                return (
+                  <>
+                    <AccountIconFilled />
+                  </>
+                );
+              return <AccountIcon />;
+            },
+          }}
+          name="Hesap"
+          component={AccountScreen}
+        />
+      </Tab.Navigator>
+  )
+};
+const Stack = createNativeStackNavigator();
+const NestedDrawerTab = () => (
+  <NavigationContainer>
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen options={{ headerShown: false }} name="BottomTab" component={BottomTab} />
+    </Stack.Navigator>
+  </NavigationContainer>
+);
+export default NestedDrawerTab;
