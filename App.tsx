@@ -20,11 +20,10 @@ const BottomTab = () => {
   return (
        <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: { fontSize: 12, fontWeight: '500', top: -15 },
+          tabBarLabelStyle: { fontSize: 12, fontWeight: '500', top: -5 },
           tabBarActiveTintColor: '#3e414c',
           tabBarHideOnKeyboard: true,
           tabBarStyle: {
-            height: 80,
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -78,7 +77,7 @@ const BottomTab = () => {
             )
           }}
           name="PlusScreen"
-          component={QRScreen}
+          component={TransactionsScreen}
         />
         <Tab.Screen
           options={{

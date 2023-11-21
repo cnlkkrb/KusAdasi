@@ -43,7 +43,7 @@ const TransactionsScreen = () => {
                 onRead={onSuccess}
                 cameraStyle={styles.cameraContainer}
                 //flashMode={RNCamera.Constants.FlashMode.torch}
-                topContent={<Text style={styles.centerText}>QR kodunuzu okutunuz</Text>}
+                topContent={<Text style={styles.centerText}>QR kodunu okutunuz</Text>}
                 containerStyle={{ alignItems: 'center' }}
                 cameraContainerStyle={{ borderRadius: 20 }}
                 showMarker
